@@ -46,6 +46,11 @@ class Tree {
       return this.includes(value, tmp);
     }
   }
-  insert(value) {}
+  insert(key, root = this.root) {
+    if (root === null) return new Node(key);
+    if (key < root.data) root.left = this.insert(key, root.left);
+    else root.right = this.insert(key, root.right);
+    return root;
+  }
 }
 export { Tree };
