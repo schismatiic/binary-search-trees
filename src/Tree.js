@@ -32,22 +32,20 @@ class Tree {
     root.right = this.buildTree(arr, mid + 1, end);
     return root;
   }
-  includes(value, data = this.root.data, tmp = this.root) {
-    if (data === value) {
+  includes(value, tmp = this.root) {
+    if (tmp.data === value) {
       return true;
-    } else if (value < data) {
-      if (tmp.left === null) {
+    } else {
+      if (
+        (tmp.left === null && value < tmp.data) ||
+        (tmp.right === null && value > tmp.data)
+      ) {
         return false;
       }
-      tmp = tmp.left;
-      return this.includes(value, tmp.data, tmp);
-    } else if (value > data) {
-      if (tmp.right === null) {
-        return false;
-      }
-      tmp = tmp.right;
-      return this.includes(value, tmp.data, tmp);
+      tmp = value < tmp.data ? tmp.left : tmp.right;
+      return this.includes(value, tmp);
     }
   }
+  insert(value) {}
 }
 export { Tree };
