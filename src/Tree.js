@@ -5,6 +5,14 @@ class Tree {
     this.arr = this.sortArray(arr);
     this.root = this.buildTree(this.arr);
   }
+  prettyPrint = (node, prefix = "", isLeft = true) => {
+    if (node === null || node === undefined) {
+      return;
+    }
+    this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
+    this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
+  };
   sortArray = (arr) => {
     const sortedArray = arr.sort((a, b) => {
       return a - b;
@@ -13,14 +21,6 @@ class Tree {
       (element, index, arr) => element !== arr[index - 1],
     );
     return removeDuplicate;
-  };
-  prettyPrint = (node, prefix = "", isLeft = true) => {
-    if (node === null || node === undefined) {
-      return;
-    }
-    this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-    this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   };
   buildTree(arr, start = 0, end = arr.length - 1) {
     if (start > end) return null;
@@ -31,6 +31,23 @@ class Tree {
     root.left = this.buildTree(arr, start, mid - 1);
     root.right = this.buildTree(arr, mid + 1, end);
     return root;
+  }
+  includes(value, data = this.root.data, tmp = this.root) {
+    if (data === value) {
+      return true;
+    } else if (value < data) {
+      if (tmp.left === null) {
+        return false;
+      }
+      tmp = tmp.left;
+      return this.includes(value, tmp.data, tmp);
+    } else if (value > data) {
+      if (tmp.right === null) {
+        return false;
+      }
+      tmp = tmp.right;
+      return this.includes(value, tmp.data, tmp);
+    }
   }
 }
 export { Tree };
