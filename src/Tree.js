@@ -77,5 +77,19 @@ class Tree {
     }
     return root;
   }
+  levelOrderForEach(callback, root = this.root) {
+    let queue = [];
+    if (root === null) return;
+    if (callback === undefined) throw new Error("Callback is not defined");
+    queue.push(root);
+    while (queue.length !== 0) {
+      const current = queue[0];
+      let tmp = queue.slice(1);
+      queue = tmp;
+      callback(current.data);
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+    }
+  }
 }
 export { Tree };
