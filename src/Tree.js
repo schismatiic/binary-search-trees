@@ -91,5 +91,26 @@ class Tree {
       if (current.right !== null) queue.push(current.right);
     }
   }
+  inOrderForEach(callback, root = this.root) {
+    if (root === null) return;
+    if (callback === undefined) throw new Error("Callback is not defined");
+    this.inOrderForEach(callback, root.left);
+    callback(root.data);
+    this.inOrderForEach(callback, root.right);
+  }
+  preOrderForEach(callback, root = this.root) {
+    if (root === null) return;
+    if (callback === undefined) throw new Error("Callback is not defined");
+    callback(root.data);
+    this.preOrderForEach(callback, root.left);
+    this.preOrderForEach(callback, root.right);
+  }
+  postOrderForEach(callback, root = this.root) {
+    if (root === null) return;
+    if (callback === undefined) throw new Error("Callback is not defined");
+    this.postOrderForEach(callback, root.left);
+    this.postOrderForEach(callback, root.right);
+    callback(root.data);
+  }
 }
 export { Tree };
