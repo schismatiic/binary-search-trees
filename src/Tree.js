@@ -46,10 +46,13 @@ class Tree {
       return this.includes(value, tmp);
     }
   }
-  insert(key, root = this.root) {
-    if (root === null) return new Node(key);
-    if (key < root.data) root.left = this.insert(key, root.left);
-    else root.right = this.insert(key, root.right);
+  insert(value, root = this.root) {
+    if (root === null) return new Node(value);
+    if (value === root.data) {
+      return root;
+    }
+    if (value < root.data) root.left = this.insert(value, root.left);
+    else root.right = this.insert(value, root.right);
     return root;
   }
 }
