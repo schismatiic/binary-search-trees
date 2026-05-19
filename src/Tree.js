@@ -55,5 +55,27 @@ class Tree {
     else root.right = this.insert(value, root.right);
     return root;
   }
+
+  getSuccessor(curr) {
+    curr = curr.right;
+    while (curr !== null && curr.left !== null) curr = curr.left;
+    return curr;
+  }
+  deleteItem(value, root = this.root) {
+    if (root === null) return root;
+    if (root.data > value) root.left = this.deleteItem(value, root.left);
+    else if (root.data < value) root.right = this.deleteItem(value, root.right);
+    else {
+      // Node with 0 or 1 child
+      if (root.left === null) return root.right;
+      if (root.right === null) return root.left;
+
+      // Node with 2 children
+      const succ = this.getSuccessor(root);
+      root.data = succ.data;
+      root.right = this.deleteItem(succ.data, root.right);
+    }
+    return root;
+  }
 }
 export { Tree };
