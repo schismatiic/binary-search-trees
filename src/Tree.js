@@ -133,5 +133,19 @@ class Tree {
       return this.height(value, root);
     }
   }
+  depth(value, root = this.root) {
+    if (root.data === value) {
+      return 0;
+    } else {
+      if (
+        (root.left === null && value < root.data) ||
+        (root.right === null && value > root.data)
+      ) {
+        return undefined;
+      }
+      root = value < root.data ? root.left : root.right;
+      return 1 + this.depth(value, root);
+    }
+  }
 }
 export { Tree };
