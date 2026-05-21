@@ -112,5 +112,26 @@ class Tree {
     this.postOrderForEach(callback, root.right);
     callback(root.data);
   }
+  countHeight(root = this.root) {
+    if (root === null) return 0;
+    return (
+      1 + Math.max(this.countHeight(root.left), this.countHeight(root.right))
+    );
+  }
+  height(value, root = this.root) {
+    if (root.data === value) {
+      const height = this.countHeight(root);
+      return height - 1;
+    } else {
+      if (
+        (root.left === null && value < root.data) ||
+        (root.right === null && value > root.data)
+      ) {
+        return undefined;
+      }
+      root = value < root.data ? root.left : root.right;
+      return this.height(value, root);
+    }
+  }
 }
 export { Tree };
