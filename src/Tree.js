@@ -147,5 +147,38 @@ class Tree {
       return 1 + this.depth(value, root);
     }
   }
+  balanceFactor(root = this.root) {
+    const left = this.countHeight(root.left) - 1;
+    const right = this.countHeight(root.right) - 1;
+    if (left - right <= 1 && left - right >= -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  isBalanced(root = this.root) {
+    let queue = [];
+    let isBalancedArray = [];
+    if (root === null) return;
+    queue.push(root);
+    while (queue.length !== 0) {
+      const current = queue[0];
+      let tmp = queue.slice(1);
+      queue = tmp;
+      const isBalanced = this.balanceFactor(current);
+      isBalancedArray.push(isBalanced);
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+    }
+    const checkBalance = isBalancedArray.filter((bool) => bool === true);
+    if (
+      checkBalance[0] === true &&
+      checkBalance.length === isBalancedArray.length
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 export { Tree };
