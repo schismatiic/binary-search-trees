@@ -180,5 +180,14 @@ class Tree {
       return false;
     }
   }
+  rebalance() {
+    let tmpArr = [];
+    this.inOrderForEach((data) => {
+      tmpArr.push(data);
+    });
+    this.arr = tmpArr;
+    this.root = this.buildTree(tmpArr);
+    return this.root;
+  }
 }
 export { Tree };
